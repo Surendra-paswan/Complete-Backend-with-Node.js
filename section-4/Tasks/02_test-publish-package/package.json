@@ -1,0 +1,6 @@
+{
+    "type": "module",
+    "dependencies": {
+        "surendra-words-counters": "^1.0.0"
+    }
+}

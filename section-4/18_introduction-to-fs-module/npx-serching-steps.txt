@@ -1,0 +1,27 @@
+Search step-1:
+    Searchs for package.json in current working directory.
+    Searchs for name for key in this json file.
+    Searchs for bin key,
+
+    i fase porblem , when i npx hello , then show some error . how fix it 
+    first check script shell : npm config get script-shell enter show null, 
+    then: npm config set script-shell "C:\Program Files\Git\usr\bin\bash.exe" enter, fix this porblem 
+    
+    if not fount package.json file then move step 2
+
+Search step-2:
+    Searchs for node_modules\.bin\hello file in current working directory and execute this file.
+
+Search step-3
+    Searchs for hello file in global npm folders
+    and execute this file
+    
+Search Step-4 
+    Searchs for hello package in npm cache (C:\Users\Surendra Kumar Pasi\AppData\Local\npm-cache\_npx\0ea370f919643470\node_modules)
+    Prompts to install the package if found 
+    Downloads and install  
+
+Search Step-5
+    Searchs for hello package in npm regisery
+    Prompts to install the package if found 
+    Downloads and install  

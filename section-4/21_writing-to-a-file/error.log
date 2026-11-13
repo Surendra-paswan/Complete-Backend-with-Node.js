@@ -1,0 +1,12 @@
+ 1:10:06 PM
+ENOENT: no such file or directory, open 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\21_writing-to-a-file\images.jpeg'
+Error: ENOENT: no such file or directory, open 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\21_writing-to-a-file\images.jpeg'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1290:14)
+    at async file:///D:/Web-Development/Notes%20Developer/BackEnd%20Notes/Node%20js/Node.js-Course/section-4/21_writing-to-a-file/app.js:20:26
+1:15:56 PM
+ENOENT: no such file or directory, open 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\21_writing-to-a-file\images.jpeg'
+Error: ENOENT: no such file or directory, open 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\21_writing-to-a-file\images.jpeg'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1290:14)
+    at async file:///D:/Web-Development/Notes%20Developer/BackEnd%20Notes/Node%20js/Node.js-Course/section-4/21_writing-to-a-file/app.js:20:26

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>How to publish package in npm website step by step.</h1>
+    <p>
+        # Publishing NPM Packages – Complete Guide
+
+## 1. What is NPM?
+
+NPM (Node Package Manager) is the default package manager for Node.js.
+
+It allows developers to:
+- Create reusable JavaScript packages.
+- Publish packages to the npm registry.
+- Install packages created by other developers.
+- Share code with the developer community.
+
+Official website: https://www.npmjs.com/
+
+---
+
+## 2. Understand the Publishing Workflow
+
+```text
+Create Package
+      |
+      v
+Write Source Code
+      |
+      v
+Configure package.json
+      |
+      v
+Check Package Name Availability
+      |
+      v
+Test Package (npm pack --dry-run)
+      |
+      v
+Login to NPM (npm login)
+      |
+      v
+Verify Authentication (npm whoami)
+      |
+      v
+Publish Package (npm publish)
+      |
+      v
+Verify Published Package
+      |
+      v
+Install Package in Another Project
+```
+
+---
+
+## 3. Create a Package Directory
+
+Create a separate directory for your npm package.
+
+Example:
+
+```text
+section-4/
+│
+├── words-counters/
+│   ├── package.json
+│   └── wordCounter.js
+│
+└── 20_task/
+    ├── app.js
+    ├── package.json
+    └── simple.txt
+```
+
+**Important:** Do not create or publish your package directly inside `node_modules`.
+
+---
+
+## 4. Create package.json
+
+The `package.json` file contains package metadata and configuration.
+
+Example:
+
+```json
+{
+  "name": "surendra-words-counters",
+  "version": "1.0.0",
+  "description": "A simple Node.js word counter package",
+  "type": "module",
+  "main": "./wordCounter.js",
+  "exports": {
+    ".": "./wordCounter.js"
+  },
+  "keywords": [
+    "nodejs",
+    "word-counter",
+    "word-count"
+  ],
+  "author": "Surendra",
+  "license": "ISC"
+}
+```
+
+### Important package.json Properties
+
+| Property | Description |
+|---|---|
+| name | Unique package name |
+| version | Current package version |
+| description | Package description |
+| type | Defines module system |
+| main | Main entry point |
+| exports | Defines public package entry points |
+| keywords | Helps users discover the package |
+| author | Package author |
+| license | Package license |
+
+**Note:** The package name must be unique in the npm registry for unscoped packages.
+
+---
+
+## 5. Write Package Source Code
+
+Example: `wordCounter.js`
+
+```javascript
+import { readFile } from "node:fs/promises";
+
+const wordCounter = async (filePath) => {
+  const fileContent = await readFile(filePath, "utf-8");
+
+  const wordsArray = fileContent
+    .split(/[\W]/)
+    .filter((word) => word);
+
+  const wordsCount = {};
+
+  wordsArray.forEach((word) => {
+    if (word in wordsCount) {
+      wordsCount[word] += 1;
+    } else {
+      wordsCount[word] = 1;
+    }
+  });
+
+  return wordsCount;
+};
+
+export default wordCounter;
+```
+
+---
+
+## 6. Check Package Name Availability
+
+Before publishing, check whether another developer has already registered your package name.
+
+Command:
+
+```bash
+npm view surendra-words-counters
+```
+
+If the package does not exist, npm will generally return an `E404` error.
+
+If it already exists, choose another unique name.
+
+You can also search directly:
+
+https://www.npmjs.com/search
+
+---
+
+## 7. Test Your Package Before Publishing
+
+Run the following command inside your package directory:
+
+```bash
+npm pack --dry-run
+```
+
+Purpose:
+- Checks whether npm can prepare the package.
+- Shows which files will be included.
+- Helps identify missing files and invalid package metadata.
+
+To generate an actual package archive:
+
+```bash
+npm pack
+```
+
+This creates a `.tgz` file.
+
+Inspect the archive before publishing if necessary.
+
+---
+
+## 8. Login to Your NPM Account
+
+Command:
+
+```bash
+npm login
+```
+
+Steps:
+
+1. Open the browser when prompted.
+2. Login to your npm account.
+3. Complete the authentication process.
+4. Return to your terminal.
+
+Verify authentication:
+
+```bash
+npm whoami
+```
+
+This displays your authenticated npm username.
+
+---
+
+## 9. Understand NPM Two-Factor Authentication (2FA)
+
+NPM uses additional security controls to protect package publishing.
+
+Depending on your account and publishing configuration, npm may require:
+
+- Two-factor authentication (2FA).
+- An appropriately configured granular access token.
+- Trusted publishing for supported CI/CD workflows.
+
+**Recommendation:** Enable 2FA for your npm account.
+
+Official documentation:
+
+https://docs.npmjs.com/configuring-two-factor-authentication/
+
+---
+
+## 10. Publish Your NPM Package
+
+Run this command inside your package directory:
+
+```bash
+npm publish
+```
+
+For an unscoped package, npm publishes it publicly by default.
+
+For a public scoped package:
+
+```bash
+npm publish --access public
+```
+
+Example successful output:
+
+```text
+npm notice Publishing to https://registry.npmjs.org/
++ surendra-words-counters@1.0.0
+```
+
+Your package is now published!
+
+---
+
+## 11. Verify Your Published Package
+
+Check package information:
+
+```bash
+npm view surendra-words-counters
+```
+
+Check a specific version:
+
+```bash
+npm view surendra-words-counters@1.0.0
+```
+
+Visit your package page:
+
+```text
+https://www.npmjs.com/package/surendra-words-counters
+```
+
+---
+
+## 12. Install Your Published Package
+
+Go to another Node.js project.
+
+Install your package:
+
+```bash
+npm install surendra-words-counters
+```
+
+NPM downloads the package into `node_modules`.
+
+Example project:
+
+```text
+20_task/
+│
+├── node_modules/
+│   └── surendra-words-counters/
+│
+├── app.js
+├── package.json
+└── simple.txt
+```
+
+---
+
+## 13. Import and Use Your Package
+
+Example: `app.js`
+
+```javascript
+import wordCounter from "surendra-words-counters";
+
+const result = await wordCounter("./simple.txt");
+
+console.log(result);
+```
+
+Run:
+
+```bash
+node app.js
+```
+
+Node.js resolves the package using its package name and package entry-point configuration.
+
+---
+
+## 14. Update an Already Published Package
+
+NPM does not allow publishing the same package version again.
+
+For example, if version `1.0.0` is already published, you must increase the version.
+
+### Semantic Versioning (SemVer)
+
+Format:
+
+```text
+MAJOR.MINOR.PATCH
+```
+
+| Version Change | Command | Purpose |
+|---|---|---|
+| Patch | npm version patch | Bug fixes |
+| Minor | npm version minor | New backward-compatible features |
+| Major | npm version major | Breaking changes |
+
+Example:
+
+```bash
+npm version patch
+npm publish
+```
+
+Version changes:
+
+```text
+1.0.0 -> 1.0.1
+```
+
+For a minor update:
+
+```bash
+npm version minor
+npm publish
+```
+
+Version changes:
+
+```text
+1.0.1 -> 1.1.0
+```
+
+For a major update:
+
+```bash
+npm version major
+npm publish
+```
+
+Version changes:
+
+```text
+1.1.0 -> 2.0.0
+```
+
+---
+
+## 15. Useful NPM Commands
+
+| Command | Purpose |
+|---|---|
+| npm init | Create package.json |
+| npm init -y | Create package.json with defaults |
+| npm login | Login to npm |
+| npm whoami | Check authenticated username |
+| npm view package-name | View package information |
+| npm pack --dry-run | Preview package contents |
+| npm pack | Generate package archive |
+| npm publish | Publish package |
+| npm install package-name | Install package |
+| npm version patch | Increase patch version |
+| npm version minor | Increase minor version |
+| npm version major | Increase major version |
+| npm unpublish package-name | Unpublish an eligible package, subject to npm restrictions |
+
+---
+
+## 16. Common Errors and Solutions
+
+### Error 1: Package name already exists
+
+```text
+npm error 403 Forbidden
+```
+
+**Reason:** Another developer owns the package name.
+
+**Solution:** Choose a unique package name.
+
+### Error 2: Invalid package
+
+```text
+npm error Invalid package, must have name and version
+```
+
+**Reason:** Your package.json is missing required metadata.
+
+**Solution:** Add:
+
+```json
+{
+  "name": "my-unique-package",
+  "version": "1.0.0"
+}
+```
+
+Also make sure you are executing the command in the correct package directory.
+
+### Error 3: Two-factor authentication required
+
+```text
+npm error E403
+Two-factor authentication or granular access token
+with bypass 2fa enabled is required to publish packages.
+```
+
+**Reason:** Your npm account requires additional publishing authentication.
+
+**Solution:** Configure 2FA or an appropriate publishing token according to npm's current security policies.
+
+### Error 4: Cannot publish the same version
+
+**Reason:** The package version has already been published.
+
+**Solution:**
+
+```bash
+npm version patch
+npm publish
+```
+
+### Error 5: Module not found
+
+```text
+ERR_MODULE_NOT_FOUND
+```
+
+**Reason:** Incorrect import path, missing file extension for a relative ESM import, or incorrect package entry point.
+
+**Solution:** Check your package.json `exports` and import statement.
+
+---
+
+## 17. Publishing Checklist
+
+Before publishing a package, verify:
+
+- [ ] Package directory is separate from the consumer project.
+- [ ] package.json contains a valid name and version.
+- [ ] Package name is unique.
+- [ ] Source code works correctly.
+- [ ] Main entry point is configured.
+- [ ] Exports are configured correctly.
+- [ ] npm pack --dry-run succeeds.
+- [ ] Unnecessary files and secrets are excluded.
+- [ ] npm login succeeds.
+- [ ] npm whoami displays your username.
+- [ ] Publishing authentication requirements are satisfied.
+- [ ] npm publish succeeds.
+- [ ] Package is available on npmjs.com.
+- [ ] Package installs and works in another project.
+
+---
+
+## 18. Official Learning Resources
+
+1. NPM Documentation: https://docs.npmjs.com/
+2. Creating a package.json: https://docs.npmjs.com/creating-a-package-json-file
+3. Creating and publishing unscoped public packages: https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages/
+4. NPM package publishing: https://docs.npmjs.com/cli/commands/npm-publish
+5. Semantic Versioning: https://semver.org/
+
+---
+
+## Final Summary
+
+```text
+1. Create package directory
+2. Write source code
+3. Configure package.json
+4. Check package name
+5. Run npm pack --dry-run
+6. Run npm login
+7. Run npm whoami
+8. Configure publishing security
+9. Run npm publish
+10. Verify package
+11. Install package in another project
+12. Import and use package
+13. Update versions for future releases
+```
+
+**Key Concept:** Publishing an NPM package allows other developers to reuse your JavaScript code by installing it through the npm registry.
+
+    </p>
+
+<h1>short </h1>
+<p># Publish NPM Package
+
+## Publishing Workflow
+
+1. Create a package directory.
+2. Write reusable JavaScript code.
+3. Configure `package.json`.
+4. Check package name availability.
+5. Test package using `npm pack --dry-run`.
+6. Login using `npm login`.
+7. Verify login using `npm whoami`.
+8. Publish using `npm publish`.
+9. Install using `npm install package-name`.
+
+## Important Commands
+
+| Command | Purpose |
+|---|---|
+| `npm init -y` | Create package.json |
+| `npm view package-name` | Check package information |
+| `npm pack --dry-run` | Preview package files |
+| `npm login` | Login to npm |
+| `npm whoami` | Check npm username |
+| `npm publish` | Publish package |
+| `npm install package-name` | Install package |
+| `npm version patch` | Update patch version |
+
+## package.json Example
+
+```json
+{
+  "name": "my-unique-package",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  }
+}
+```
+
+## Semantic Versioning
+
+Format: `MAJOR.MINOR.PATCH`
+
+- **Major:** Breaking changes (1.0.0 → 2.0.0)
+- **Minor:** New features (1.0.0 → 1.1.0)
+- **Patch:** Bug fixes (1.0.0 → 1.0.1)
+
+## Important Notes
+
+- Package names must be unique for unscoped packages.
+- Never publish directly from `node_modules`.
+- Every published version must be unique.
+- Configure npm publishing authentication (2FA or supported alternative).
+- Test your package before publishing.
+
+**Official website:** https://www.npmjs.com/
+
+**Documentation:** https://docs.npmjs.com/</p>      
+</body>
+</html>

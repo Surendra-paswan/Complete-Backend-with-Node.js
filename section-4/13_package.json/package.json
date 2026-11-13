@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "hi": "ls",
+    "start": "node app.js",
+    "test": "pwd",
+    "dev": "node --watch app.js",
+    "restart": "node -v"
+  },
+  "dependencies": {
+    "express": "^4.15.0"
+  }
+}

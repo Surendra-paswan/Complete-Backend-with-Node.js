@@ -1,0 +1,6 @@
+
+4:28:26 PM
+ENOENT: no such file or directory, copyfile 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\Tasks\03_read-write-and-append-file\images.png' -> 'C:\Users\Surendra Kumar Pasi\Desktop\images.png'
+Error: ENOENT: no such file or directory, copyfile 'D:\Web-Development\Notes Developer\BackEnd Notes\Node js\Node.js-Course\section-4\Tasks\03_read-write-and-append-file\images.png' -> 'C:\Users\Surendra Kumar Pasi\Desktop\images.png'
+    at async Object.copyFile (node:internal/fs/promises:622:10)
+    at async file:///D:/Web-Development/Notes%20Developer/BackEnd%20Notes/Node%20js/Node.js-Course/section-4/Tasks/03_read-write-and-append-file/copy.js:21:5
