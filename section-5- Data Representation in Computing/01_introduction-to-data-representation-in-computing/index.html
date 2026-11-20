@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study notes on Introduction to Data Representation in Computing.">
+  <title>Introduction to Data Representation in Computing</title>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-light: #eff6ff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --surface: #ffffff;
+      --background: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 32px 16px;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    header {
+      padding-bottom: 24px;
+      margin-bottom: 30px;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #0f172a;
+      font-size: clamp(2rem, 5vw, 2.7rem);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      padding-bottom: 7px;
+      color: #0f172a;
+      font-size: 1.45rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      margin: 20px 0 8px;
+      color: #1e40af;
+      font-size: 1.1rem;
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol { padding-left: 24px; }
+    li { margin: 6px 0; }
+
+    code {
+      padding: 2px 6px;
+      color: #1e40af;
+      background: #eff6ff;
+      border-radius: 4px;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .definition, .example, .note {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+
+    .definition {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+    }
+
+    .example {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+    }
+
+    .note {
+      background: #fffbeb;
+      border-left: 4px solid #d97706;
+    }
+
+    table {
+      width: 100%;
+      margin: 16px 0;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 11px 13px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    tbody tr:nth-child(even) { background: #fafafa; }
+
+    .number-systems {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .system {
+      padding: 15px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .system strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #1e40af;
+    }
+
+    .system span { color: var(--muted); }
+
+    .question {
+      margin: 14px 0;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .question p { margin-top: 0; font-weight: 700; }
+
+    footer {
+      margin-top: 38px;
+      padding-top: 18px;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 12px 8px; }
+      .container { padding: 22px 17px; }
+      .number-systems { grid-template-columns: 1fr; }
+      table { font-size: 0.92rem; }
+      th, td { padding: 8px; }
+    }
+
+    @media print {
+      body { padding: 0; background: white; }
+      .container {
+        width: 100%;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+      }
+      h2, h3 { break-after: avoid; }
+      table, .definition, .example, .note, .system {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <p class="eyebrow">Computer Science · Study Notes</p>
+      <h1>Introduction to Data Representation in Computing</h1>
+      <p class="subtitle">A beginner-friendly guide to how computers represent and process information.</p>
+    </header>
+
+    <section>
+      <h2>1. What is Data Representation?</h2>
+      <div class="definition">
+        <strong>Definition:</strong> Data representation is the method of converting information into a format that a computer can understand, process, store, and communicate.
+      </div>
+      <p>Humans use languages, symbols, and decimal numbers to communicate. Computers, however, work internally with binary digits: <strong>0 and 1</strong>.</p>
+      <div class="example">
+        <strong>Examples:</strong>
+        <ul>
+          <li>The character <code>A</code> is represented in standard ASCII as <code>01000001</code>.</li>
+          <li>The decimal number <code>10</code> is represented in binary as <code>1010</code>.</li>
+        </ul>
+      </div>
+      <p>In simple words, data representation is the process of expressing information in a computer-readable form.</p>
+    </section>
+
+    <section>
+      <h2>2. Why is Data Representation Important?</h2>
+      <ol>
+        <li>It allows computers to understand and process information.</li>
+        <li>It helps store data in memory and storage devices.</li>
+        <li>It enables communication and data exchange between computers.</li>
+        <li>It supports mathematical and logical operations.</li>
+        <li>It makes it possible to represent text, images, audio, and video digitally.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>3. Basic Units of Data Representation</h2>
+      <p>Computers store and process information using bits and groups of bits.</p>
+      <table>
+        <thead>
+          <tr><th>Unit</th><th>Meaning</th><th>Equivalent</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bit</td><td>Binary digit</td><td>0 or 1</td></tr>
+          <tr><td>Nibble</td><td>A group of bits</td><td>4 bits</td></tr>
+          <tr><td>Byte</td><td>A group of bits</td><td>8 bits</td></tr>
+          <tr><td>Kilobyte (KB)</td><td>Decimal storage unit</td><td>1,000 bytes</td></tr>
+          <tr><td>Megabyte (MB)</td><td>Decimal storage unit</td><td>1,000 KB</td></tr>
+          <tr><td>Gigabyte (GB)</td><td>Decimal storage unit</td><td>1,000 MB</td></tr>
+          <tr><td>Terabyte (TB)</td><td>Decimal storage unit</td><td>1,000 GB</td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <strong>Important note:</strong> In binary-based measurements, 1 KiB = 1,024 bytes, 1 MiB = 1,024 KiB, and 1 GiB = 1,024 MiB. KB and KiB are not exactly the same.
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Number Systems in Computing</h2>
+      <p>A number system is a way of representing numbers using a set of digits or symbols. The four commonly used number systems are:</p>
+      <div class="number-systems">
+        <div class="system">
+          <strong>1. Binary — Base 2</strong>
+          <span>Digits: 0 and 1</span>
+          <p>Example: <code>(1010)₂ = (10)₁₀</code></p>
+        </div>
+        <div class="system">
+          <strong>2. Decimal — Base 10</strong>
+          <span>Digits: 0 to 9</span>
+          <p>Example: <code>(25)₁₀</code></p>
+        </div>
+        <div class="system">
+          <strong>3. Octal — Base 8</strong>
+          <span>Digits: 0 to 7</span>
+          <p>Example: <code>(17)₈ = (15)₁₀</code></p>
+        </div>
+        <div class="system">
+          <strong>4. Hexadecimal — Base 16</strong>
+          <span>Digits: 0 to 9 and A to F</span>
+          <p>Example: <code>(A)₁₆ = (10)₁₀</code></p>
+        </div>
+      </div>
+
+      <h3>A. Binary Number System</h3>
+      <ul>
+        <li>Base is 2.</li>
+        <li>It uses only 0 and 1.</li>
+        <li>It is the fundamental number system used internally by digital computers.</li>
+      </ul>
+
+      <h3>B. Decimal Number System</h3>
+      <ul>
+        <li>Base is 10.</li>
+        <li>It uses digits from 0 to 9.</li>
+        <li>It is the number system commonly used in everyday life.</li>
+      </ul>
+
+      <h3>C. Octal Number System</h3>
+      <ul>
+        <li>Base is 8.</li>
+        <li>It uses digits from 0 to 7.</li>
+        <li>Each octal digit corresponds to three binary bits.</li>
+      </ul>
+
+      <h3>D. Hexadecimal Number System</h3>
+      <ul>
+        <li>Base is 16.</li>
+        <li>It uses digits 0 to 9 and letters A to F.</li>
+        <li>A = 10, B = 11, C = 12, D = 13, E = 14, and F = 15.</li>
+        <li>Each hexadecimal digit corresponds to four binary bits.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Types of Data Representation</h2>
+
+      <h3>1. Numeric Data</h3>
+      <p>Numeric data represents numbers. It includes integers (whole numbers) and floating-point values (numbers with fractional parts).</p>
+      <p><strong>Examples:</strong> <code>100</code>, <code>25.5</code>, <code>-10</code>.</p>
+
+      <h3>2. Character and Text Data</h3>
+      <p>Text data represents letters, digits, punctuation marks, and other symbols. Computers use character encoding standards such as ASCII and Unicode.</p>
+      <p><strong>Examples:</strong> <code>A</code>, <code>Hello</code>, <code>@</code>.</p>
+
+      <h3>3. Image Data</h3>
+      <p>Digital images are commonly made up of small units called pixels. Each pixel stores information about color and brightness.</p>
+
+      <h3>4. Audio Data</h3>
+      <p>Digital audio is commonly created by sampling an analog sound signal and converting the samples into digital values. Quantization assigns each sample a representable digital value.</p>
+
+      <h3>5. Video Data</h3>
+      <p>Digital video is usually represented as a sequence of images called frames, often combined with digital audio.</p>
+    </section>
+
+    <section>
+      <h2>6. Character Encoding</h2>
+      <div class="definition">
+        <strong>Definition:</strong> Character encoding is a system that assigns numeric values to characters so computers can store, process, and exchange text.
+      </div>
+      <table>
+        <thead>
+          <tr><th>Encoding</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ASCII</td><td>Standard ASCII represents 128 characters using 7 bits.</td></tr>
+          <tr><td>Extended ASCII</td><td>A general term often used for 8-bit character encodings; there are multiple variants.</td></tr>
+          <tr><td>Unicode</td><td>A universal character standard that assigns code points to characters from writing systems around the world.</td></tr>
+          <tr><td>UTF-8</td><td>A variable-length Unicode encoding that uses 1 to 4 bytes per code point.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="example">
+        <strong>Example: Capital letter A</strong>
+        <ul>
+          <li>Decimal (ASCII): <code>65</code></li>
+          <li>Binary (8-bit form): <code>01000001</code></li>
+          <li>Hexadecimal: <code>41</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. Real-Life Example of Data Representation</h2>
+      <p>Imagine typing <code>Hello 123</code> on a computer:</p>
+      <ul>
+        <li>The letters are stored using a character encoding such as UTF-8.</li>
+        <li>The digits are stored as text characters if they are part of the message. If used in a calculation, they may be represented as numeric values.</li>
+        <li>Photographs are represented as pixel data.</li>
+        <li>Recorded sound is represented as digital audio samples.</li>
+        <li>Movies are represented using video frames, usually with audio.</li>
+      </ul>
+      <p>All of these forms of information are ultimately stored and processed as binary data inside a computer.</p>
+    </section>
+
+    <section>
+      <h2>8. Advantages of Data Representation</h2>
+      <ol>
+        <li>Makes information understandable to computer systems.</li>
+        <li>Supports organized and efficient data storage.</li>
+        <li>Enables computers to process different types of information.</li>
+        <li>Supports reliable data communication.</li>
+        <li>Allows digital representation of multimedia such as images, audio, and video.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>9. Quick Revision</h2>
+      <ul>
+        <li>Computers use binary digits (0 and 1) internally.</li>
+        <li>A bit is the smallest basic unit of digital data.</li>
+        <li>One byte contains 8 bits.</li>
+        <li>The four common number systems are binary, decimal, octal, and hexadecimal.</li>
+        <li>ASCII and Unicode are used to represent text.</li>
+        <li>Images use pixels; digital audio uses samples; digital video uses frames.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>10. Practice Questions</h2>
+      <div class="question">
+        <p>1. What is data representation?</p>
+        <span>Write a definition and give one example.</span>
+      </div>
+      <div class="question">
+        <p>2. Why is data representation important in computing?</p>
+        <span>Explain any four points.</span>
+      </div>
+      <div class="question">
+        <p>3. Define bit, nibble, and byte.</p>
+        <span>How many bits are there in one byte?</span>
+      </div>
+      <div class="question">
+        <p>4. Explain the binary, decimal, octal, and hexadecimal number systems.</p>
+        <span>Mention the base and digits used by each system.</span>
+      </div>
+      <div class="question">
+        <p>5. What is character encoding?</p>
+        <span>Explain ASCII and Unicode.</span>
+      </div>
+      <div class="question">
+        <p>6. How are images, audio, and video represented digitally?</p>
+        <span>Explain pixels, sampling, and frames.</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>11. Conclusion</h2>
+      <p>Data representation is a fundamental concept in computer science. It explains how computers represent numbers, text, images, audio, and video using binary data. Understanding bits, bytes, number systems, and character encoding provides a strong foundation for learning computer architecture and other computing topics.</p>
+      <div class="note">
+        <strong>Next topic to study:</strong> Number System Conversion — Binary to Decimal, Decimal to Binary, Octal, and Hexadecimal.
+      </div>
+    </section>
+
+    <footer>
+      <p>End of Notes · Introduction to Data Representation in Computing</p>
+    </footer>
+  </main>
+</body>
+</html>
